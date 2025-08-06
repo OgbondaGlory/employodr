@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmployODR - AI-Enhanced Access to Justice in Employment Law</title>
+    <meta name="description" content="EmployODR combines cutting-edge artificial intelligence with explainable visualization to democratize access to Online Dispute Resolution tools, making employment law guidance accessible to everyone.">
+    <meta name="keywords" content="AI, employment law, dispute resolution, access to justice, legal technology, ODR">
+    <meta name="author" content="EmployODR Research Team, Bangor University">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="EmployODR - AI-Enhanced Access to Justice">
+    <meta property="og:description" content="Revolutionary AI-powered platform for employment law guidance and dispute resolution">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://employodr.github.io">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EmployODR - AI-Enhanced Access to Justice">
+    <meta name="twitter:description" content="Revolutionary AI-powered platform for employment law guidance and dispute resolution">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #B10035;
+            --primary-dark: #8b0028;
+            --secondary-color: #f8f9fa;
+            --text-dark: #333;
+            --text-light: #666;
+            --text-lighter: #888;
+            --border-color: rgba(177, 0, 53, 0.1);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        @media (min-width: 1600px) {
+            .container {
+                max-width: 1600px;
+                padding: 0 4rem;
+            }
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(177, 0, 53, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            padding: 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-title .highlight {
+            color: var(--primary-color);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            max-width: 650px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .funding-info {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            position: absolute;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            width: 200px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .feature-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .feature-card:nth-child(1) {
+            top: 20px;
+            right: 20px;
+            animation-delay: 0s;
+        }
+
+        .feature-card:nth-child(2) {
+            bottom: 100px;
+            left: 50px;
+            width: 180px;
+            animation-delay: 2s;
+        }
+
+        .feature-card:nth-child(3) {
+            top: 150px;
+            left: 20px;
+            width: 190px;
+            animation-delay: 4s;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2.5rem;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 7rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features Section */
+        .features {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .feature-item h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-item p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Research Section */
+        .research {
+            background: white;
+        }
+
+        .research-content {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .publication-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .publication-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .publication-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .authors {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .venue {
+            color: var(--text-lighter);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .abstract {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .external-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .external-link:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Team Section */
+        .team {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+
+        .team-member {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .team-member h4 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .role {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .affiliation {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .bio {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .contact-info h4 {
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-info p {
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid #555;
+            color: #999;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .research-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .feature-card {
+                position: static !important;
+                margin-bottom: 1rem;
+                width: auto !important;
+            }
+
+            .hero-visual {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">
+                    <i data-lucide="gavel"></i>
+                    EmployODR
+                </a>
+                <div class="nav-links">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#research" class="nav-link">Research</a>
+                    <a href="#team" class="nav-link">Team</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="mailto:glory.ogbonda@bangor.ac.uk?subject=EmployODR Demo Request&body=Hello, I am interested in learning more about the EmployODR system and would like to request access to a demonstration. Please provide information about how I can explore the platform's capabilities." class="btn-primary">
+                        <i data-lucide="mail"></i>
+                        Request Demo
+                    </a>
+                </div>
+                <button class="mobile-menu-button" id="mobile-menu-button">
+                    <i data-lucide="menu"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        AI-Enhanced <span class="highlight">Access to Justice</span> in Employment Law
+                    </h1>
+                    <p class="hero-subtitle">
+                        EmployODR combines cutting-edge artificial intelligence with explainable visualization 
+                        to democratize access to Online Dispute Resolution tools, making employment law guidance 
+                        accessible to everyone.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="mailto:glory.ogbonda@bangor.ac.uk?subject=EmployODR Demo Request&body=Hello, I am interested in learning more about the EmployODR system and would like to request access to a demonstration. Please provide information about how I can explore the platform's capabilities." class="btn-primary">
+                            <i data-lucide="bot"></i>
+                            Request Demo
+                        </a>
+                        <a href="#research" class="btn-secondary">
+                            <i data-lucide="book-open"></i>
+                            View Research
+                        </a>
+                    </div>
+                    <div class="funding-info">
+                        <strong>Funded by:</strong> UK Government Regulators Pioneer Fund 3 (RPF3) & UKRI Centre for Doctoral Training in AI and Advanced Computing AIMLAC (Grant Number: EP/S023992/1) | 
+                        <strong>Partners:</strong> Solicitors Regulation Authority, Law Society, Access to Justice Foundation
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="feature-card">
+                        <h4><i data-lucide="brain"></i>AI-Powered Analysis</h4>
+                        <p>GPT-3.5 Turbo with RAG system for accurate legal guidance</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4><i data-lucide="eye"></i>Explainable AI</h4>
+                        <p>Transparent reasoning with visual explanations</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4><i data-lucide="network"></i>Interactive Maps</h4>
+                        <p>Visual pathways through legal resolution processes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">ODR Tools Integrated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Legal Accuracy Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Employment Law Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Major Publications</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="features">
+        <div class="container">
+            <h2 class="section-title">Revolutionary Features</h2>
+            <p class="section-subtitle">
+                Combining state-of-the-art AI technology with human-centered design to transform 
+                how people access employment law guidance and dispute resolution tools.
+            </p>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i data-lucide="bot"></i>
+                    </div>
+                    <h3>AI-Powered Chatbot</h3>
+                    <p>Interactive conversational AI using GPT-3.5 Turbo with Retrieval-Augmented Generation (RAG) for accurate, contextual employment law guidance.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i data-lucide="eye"></i>
+                    </div>
+                    <h3>Explainable AI</h3>
+                    <p>Transparent decision-making with visual explanations of how recommendations are generated, building trust through explainability.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i data-lucide="network"></i>
+                    </div>
+                    <h3>Interactive Visualizations</h3>
+                    <p>Dynamic pathway maps showing legal reasoning, ODR tool connections, and step-by-step guidance through complex employment law scenarios.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i data-lucide="bar-chart-3"></i>
+                    </div>
+                    <h3>Comparative Analytics</h3>
+                    <p>Side-by-side comparison of ODR tools with relevance scoring, cost analysis, and accessibility features to inform decision-making.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i data-lucide="scale"></i>
+                    </div>
+                    <h3>Legal Accuracy</h3>
+                    <p>Curated legal knowledge base covering England and Wales employment law with real-time classification and triage capabilities.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i data-lucide="target"></i>
+                    </div>
+                    <h3>Personalized Recommendations</h3>
+                    <p>Tailored ODR tool suggestions based on specific employment law issues, timing constraints, and individual circumstances.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section class="section research" id="research">
+        <div class="container">
+            <h2 class="section-title">Published Research</h2>
+            <p class="section-subtitle">
+                Our work has been peer-reviewed and published in leading academic conferences and reports, 
+                contributing to the growing field of AI-enhanced access to justice.
+            </p>
+            
+            <div class="research-content">
+                <div>
+                    <div class="publication-card">
+                        <h4><i data-lucide="file-text"></i>ICAIL 2025 Workshop Paper</h4>
+                        <div class="authors">S. Nason, E. G. Ogbonda, J. C. Roberts, P. W. S. Butcher</div>
+                        <div class="venue">AI for Access to Justice Workshop, International Conference on AI and Law 2025</div>
+                        <div class="abstract">
+                            "Harnessing Generative AI to Enhance Access to Online Dispute Resolution in Employment Law" - 
+                            This paper explains the EmployODR prototype and matters raised in development and user testing, 
+                            particularly as a catalyst for further discussion of generative AI's promise in enhancing access to justice.
+                        </div>
+                    </div>
+
+                    <div class="publication-card">
+                        <h4><i data-lucide="file-text"></i>Visualization Research Poster Paper</h4>
+                        <div class="authors">E. G. Ogbonda, S. Nason, J. C. Roberts, P. W. S. Butcher</div>
+                        <div class="venue">IEEE VIS 2025 Poster Paper </div>
+                        <div class="abstract">
+                            "Explanatory Visualization with LLMs for Employment Law" - Presents a comprehensive framework 
+                            for AI-driven legal visualization that bridges complex legal procedures and public accessibility, 
+                            with explainable AI as an essential component for democratizing access to justice.
+                        </div>
+                    </div>
+
+                    <div class="publication-card">
+                        <h4><i data-lucide="award"></i>21st Century Justice Report</h4>
+                        <div class="authors">Law Society of England and Wales</div>
+                        <div class="venue">Final Report - 21st Century Access to Justice Initiative</div>
+                        <div class="abstract">
+                            EmployODR has been featured in the Law Society's comprehensive report on modernizing access to justice, 
+                            highlighting our contribution to the development of publicly funded online legal guidance tools.
+                        </div>
+                        <a href="https://www.lawsociety.org.uk/campaigns/justice-and-rule-of-law/21st-century-justice" 
+                           target="_blank" rel="noopener noreferrer" class="external-link">
+                            View Report <i data-lucide="external-link"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--text-dark); margin-bottom: 2rem;">Key Research Contributions</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px; border: 1px solid var(--border-color);">
+                            <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i data-lucide="cpu"></i>
+                                AI & Legal Technology
+                            </h4>
+                            <p style="color: var(--text-light); margin: 0;">
+                                Novel application of GPT-3.5 Turbo with RAG for employment law guidance, 
+                                achieving 95% legal accuracy in controlled testing environments.
+                            </p>
+                        </div>
+
+                        <div style="padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px; border: 1px solid var(--border-color);">
+                            <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i data-lucide="eye"></i>
+                                Explainable AI
+                            </h4>
+                            <p style="color: var(--text-light); margin: 0;">
+                                Framework for transparent AI decision-making in legal contexts, 
+                                enabling users to understand and verify AI recommendations.
+                            </p>
+                        </div>
+
+                        <div style="padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px; border: 1px solid var(--border-color);">
+                            <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i data-lucide="users"></i>
+                                Access to Justice
+                            </h4>
+                            <p style="color: var(--text-light); margin: 0;">
+                                Demonstrated significant potential for reducing barriers to legal information 
+                                and dispute resolution tools for vulnerable populations.
+                            </p>
+                        </div>
+
+                        <div style="padding: 1rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px; border: 1px solid var(--border-color);">
+                            <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <i data-lucide="network"></i>
+                                Legal Visualization
+                            </h4>
+                            <p style="color: var(--text-light); margin: 0;">
+                                Interactive pathway mapping methodology that transforms complex legal 
+                                procedures into accessible visual narratives.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section team" id="team">
+        <div class="container">
+            <h2 class="section-title">Research Team</h2>
+            <p class="section-subtitle">
+                An interdisciplinary team of experts in law, computer science, visualization, and AI, 
+                working together to advance access to justice through technology.
+            </p>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="avatar">EGO</div>
+                    <h4>Ebube Glory Ogbonda</h4>
+                    <div class="role">Lead Researcher & Developer</div>
+                    <div class="affiliation">School of Computer Science and Engineering, Bangor University</div>
+                    <div class="bio">PhD researcher specializing in AI-enhanced legal visualization and explainable AI systems for access to justice.</div>
+                    <div class="social-links">
+                        <a href="mailto:glory.ogbonda@bangor.ac.uk" class="social-link">
+                            <i data-lucide="mail"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ebube-glory-ogbonda-05bb2014b/" target="_blank" rel="noopener noreferrer" class="social-link">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                        <a href="https://ogbondaglory.github.io/POLIVIZ/" target="_blank" rel="noopener noreferrer" class="social-link">
+                            <i data-lucide="external-link"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="avatar">SN</div>
+                    <h4>Dr. Sarah Nason</h4>
+                    <div class="role">Principal Investigator (Law)</div>
+                    <div class="affiliation">School of History, Law and Social Sciences, Bangor University</div>
+                    <div class="bio">Expert in administrative justice, legal regulation, and access to justice research.</div>
+                    <div class="social-links">
+                        <a href="mailto:s.nason@bangor.ac.uk" class="social-link">
+                            <i data-lucide="mail"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/sarah-nason-7b8b6424/" target="_blank" rel="noopener noreferrer" class="social-link">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="avatar">JCR</div>
+                    <h4>Prof. Jonathan C. Roberts</h4>
+                    <div class="role">Principal Investigator (Visualization)</div>
+                    <div class="affiliation">School of Computer Science and Engineering, Bangor University</div>
+                    <div class="bio">Professor of Visualization specializing in explanatory visualization and human-computer interaction.</div>
+                    <div class="social-links">
+                        <a href="mailto:j.c.roberts@bangor.ac.uk" class="social-link">
+                            <i data-lucide="mail"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/jonathan-roberts-4836681/" target="_blank" rel="noopener noreferrer" class="social-link">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="avatar">PWB</div>
+                    <h4>Dr. Peter W. S. Butcher</h4>
+                    <div class="role">Co-Investigator and Primary Research Supervisor</div>
+                    <div class="affiliation">School of Computer Science and Engineering, Bangor University</div>
+                    <div class="bio">Expert in data visualization, visual analytics, and computational methods for legal applications.</div>
+                    <div class="social-links">
+                        <a href="mailto:p.butcher@bangor.ac.uk" class="social-link">
+                            <i data-lucide="mail"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/peter-butcher-4a4b1b1b/" target="_blank" rel="noopener noreferrer" class="social-link">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">
+                Interested in our research? Want to collaborate or learn more about EmployODR? 
+                We'd love to hear from you.
+            </p>
+            <div class="contact-content">
+                <div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i data-lucide="map-pin"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Location</h4>
+                            <p>Bangor University, Bangor, Gwynedd, Wales, UK</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i data-lucide="mail"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Primary Contact</h4>
+                            <p>glory.ogbonda@bangor.ac.uk</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i data-lucide="award"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Funding</h4>
+                            <p>UK Government Regulators Pioneer Fund 3 (RPF3) & AIMLAC</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Partners</h4>
+                            <p>SRA, Law Society, Access to Justice Foundation</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: var(--text-dark); margin-bottom: 2rem;">Research Collaboration</h3>
+                    <p style="color: var(--text-light); line-height: 1.6; margin-bottom: 2rem;">
+                        We welcome collaboration opportunities with researchers, legal professionals, 
+                        technology companies, and policy makers interested in advancing AI-enhanced 
+                        access to justice. Our work spans multiple disciplines including:
+                    </p>
+                    <ul style="color: var(--text-light); line-height: 1.8; margin-bottom: 2rem;">
+                        <li>Legal Technology & AI Applications</li>
+                        <li>Explainable AI & Trustworthy Systems</li>
+                        <li>Visualization & Human-Computer Interaction</li>
+                        <li>Access to Justice & Legal Innovation</li>
+                        <li>Online Dispute Resolution</li>
+                        <li>Employment Law & Regulatory Technology</li>
+                    </ul>
+                    <a href="mailto:glory.ogbonda@bangor.ac.uk?subject=EmployODR Research Collaboration&body=Hello, I am interested in collaborating on EmployODR research. Please let me know how we can work together to advance AI-enhanced access to justice." class="btn-primary">
+                        <i data-lucide="mail"></i>
+                        Contact for Collaboration
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>EmployODR</h4>
+                    <p>
+                        AI-Enhanced Access to Justice in Employment Law. Funded by the UK Government 
+                        Regulators Pioneer Fund 3 (RPF3) and UKRI Centre for Doctoral Training in AI and Advanced Computing 
+                        in partnership with leading legal organizations.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#features">Features</a>
+                    <a href="#research">Research</a>
+                    <a href="#team">Team</a>
+                    <a href="#contact">Contact</a>
+                    <a href="mailto:glory.ogbonda@bangor.ac.uk?subject=EmployODR Demo Request">Request Demo</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Research</h4>
+                    <a href="https://www.lawsociety.org.uk/campaigns/justice-and-rule-of-law/21st-century-justice" target="_blank" rel="noopener noreferrer">
+                        21st Century Justice Report
+                    </a>
+                    <a href="https://www.lawgazette.co.uk/news/21st-century-justice-society-proposes-publicly-funded-online-legal-guidance-tool/5119558.article" target="_blank" rel="noopener noreferrer">
+                        Law Gazette Coverage
+                    </a>
+                    <a href="mailto:glory.ogbonda@bangor.ac.uk?subject=EmployODR Publications Request">Request Publications</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Partners</h4>
+                    <p>Solicitors Regulation Authority (SRA)</p>
+                    <p>Law Society of England and Wales</p>
+                    <p>Access to Justice Foundation (ATJF)</p>
+                    <p>Bangor University</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>
+                    © 2025 EmployODR Research Team, Bangor University. 
+                    Funded by UK Government Department for Science, Innovation and Technology & UKRI AIMLAC.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.feature-item, .stat-card, .publication-card, .team-member, .stats, .section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle (basic implementation)
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            navLinks.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
